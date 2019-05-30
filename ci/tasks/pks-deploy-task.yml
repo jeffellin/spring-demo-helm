@@ -20,6 +20,7 @@ inputs:
   - name: config
 outputs:
   - name: pks-build
-path: /bin/bash
-args:
-  - helm-chart/ci/tasks/push-pks.sh
+run:
+  path: /bin/bash
+  args:
+    - helm-chart/ci/tasks/push-pks.sh
