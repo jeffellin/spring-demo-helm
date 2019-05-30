@@ -12,4 +12,4 @@ pks get-credentials ${PKS_CLUSTER}
 helm init --client-only
 #helm repo add harbor  ${HELM_URL} --ca-file ${HELM_CA_PATH} --username ${HELM_USER} --password ${HELM_PASSWORD}
 cd helm-chart
-helm install --debug --value ../config/value.yml spring-demo
+helm install --debug --values ../config/value.yml spring-demo
