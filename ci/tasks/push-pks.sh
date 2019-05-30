@@ -1,5 +1,7 @@
 #!/bin/bash
 set -ex
+ls
+ls config
 pks login -a ${PKS_ENDPOINT} -u ${PKS_USER} -p ${PKS_PASSWORD} -k
 pks get-credentials ${PKS_CLUSTER}
 #kubectl get pods
