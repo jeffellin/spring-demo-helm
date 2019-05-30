@@ -16,8 +16,8 @@ params:
   PKS_CLUSTER: ((PKS_CLUSTER))
 
 inputs:
-  - name: release
-  - name: source-code
+  - name: helm-chart
+  - name: config
 outputs:
   - name: pks-build
 run:
