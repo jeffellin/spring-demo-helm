@@ -1,0 +1,27 @@
+resources:
+- name: config
+  type: git
+  source:
+    uri: git@github.com:jeffellin/spring-demo-helm.git
+    branch: stage
+    private_key: ((private_key))
+- name: helm-chart
+  type: git
+  source:
+    uri: git@github.com:jeffellin/spring-demo-helm.git
+    branch: master
+    private_key: ((private_key))
+jobs:
+  - name: push-to-pks
+    plan:
+      - get: helm-chart
+      - get: config
+        trigger: true
+      - task: update-deployment
+        file: helm-chart/ci/tasks/pks-deploy-task.yml
+        params:
+          PKS_ENDPOINT: ((PKS_ENDPOINT))
+          PKS_USER: ((PKS_USER))
+          PKS_PASSWORD: ((PKS_PASSWORD))
+          PKS_CLUSTER: ((PKS_CLUSTER))
+     
