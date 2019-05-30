@@ -8,7 +8,7 @@ metadata:
     release: {{.Release.Name}}
 spec:
   containers:
-  - image: harbor.ellin.net/library/spring-demo:{{ .Values.springdemoimage }}
+  - image: "harbor.ellin.net/library/spring-demo:{{ .Values.springdemoimage }}"
     imagePullPolicy: Always
     name: spring-demo
     env:
