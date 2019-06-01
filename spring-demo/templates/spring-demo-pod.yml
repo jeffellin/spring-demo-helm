@@ -1,10 +1,10 @@
 kind: ConfigMap 
 apiVersion: v1 
 metadata:
-  name: spring-demo-configmap 
+  name: {{.Release.Name}}-spring-demo-configmap 
 data:
   # Configuration values can be set as key-value properties
-  database_uri: {{.Values.databaseurl | quote}}
+  database_uri: {{.Values.databaseurl}}
 ---
 apiVersion: v1
 kind: Pod
@@ -27,14 +27,14 @@ spec:
           key: username
     - name: SPRING_DATASOURCE_PASSWORD
       valueFrom:
-        configMapRef:
+        secretKeyRef:
           name: mysql-creds
           key: password
     - name: SPRING_DATASOURCE_URL
-  valueFrom:
-    secretKeyRef:
-      name: pring-demo-configmap
-      key: database_uri
+      valueFrom:
+        configMapKeyRef:
+          name: {{.Release.Name}}-spring-demo-configmap 
+          key: database_uri
     ports:
       - containerPort: 8080
         name: http
