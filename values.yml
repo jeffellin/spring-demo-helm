@@ -1,2 +1,2 @@
-springdemoimage: 0.78.0
+springdemoimage: 0.79.0
 databaseurl: "jdbc:mysql://192.168.1.151:3306/demo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
