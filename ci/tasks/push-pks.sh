@@ -12,6 +12,6 @@ pks get-credentials ${PKS_CLUSTER}
 #echo "$template" > ../pks-build/spring-demo-modified.yml
 
 helm init --client-only
-#helm repo add harbor  ${HELM_URL} --ca-file ${HELM_CA_PATH} --username ${HELM_USER} --password ${HELM_PASSWORD}
 cd helm-chart
-helm upgrade -i -n spring-demo --debug --values ../config/values.yml spring-demo
+helm --debug upgrade spring-demo --install spring-demo --values ../config/values.yml
+
