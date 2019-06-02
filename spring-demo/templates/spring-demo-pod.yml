@@ -1,60 +1,53 @@
-kind: ConfigMap 
-apiVersion: v1 
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: {{.Release.Name}}-spring-demo-configmap 
-data:
-  # Configuration values can be set as key-value properties
-  database_uri: {{.Values.databaseurl}}
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: {{.Release.Name}}-spring-demo
+  name: {{ include "spring-demo.fullname" . }}
   labels:
-    version: {{.Chart.Version}}
-    app: spring-demo
-    release: {{.Release.Name}}
+    app.kubernetes.io/name: {{ include "spring-demo.name" . }}
+    helm.sh/chart: {{ include "spring-demo.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  containers:
-  - image: "harbor.ellin.net/library/spring-demo:{{ .Values.springdemoimage }}"
-    imagePullPolicy: Always
-    name: spring-demo
-    env:
-    - name: SPRING_DATASOURCE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          name: mysql-creds
-          key: username
-    - name: SPRING_DATASOURCE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: mysql-creds
-          key: password
-    - name: SPRING_DATASOURCE_URL
-      valueFrom:
-        configMapKeyRef:
-          name: {{.Release.Name}}-spring-demo-configmap 
-          key: database_uri
-    ports:
-      - containerPort: 8080
-        name: http
-        protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{.Release.Name}}-spring-demo-service
-  labels:
-    app: spring-demo
-    version: {{.Chart.Version}}
-    release: {{.Release.Name}}
-    
-spec:
-  type: NodePort
-  ports:
-  - port: 8080
-    protocol: TCP
+  replicas: {{ .Values.replicaCount }}
   selector:
-    app: spring-demo  
-    version: {{.Chart.Version}}
-    release: {{.Release.Name}}
+    matchLabels:
+      app.kubernetes.io/name: {{ include "spring-demo.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "spring-demo.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-creds
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-creds
+                  key: password
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Release.Name}}-spring-demo-configmap 
+                  key: database_uri
+          image: "harbor.ellin.net/library/spring-demo:{{ .Values.springdemoimage }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
