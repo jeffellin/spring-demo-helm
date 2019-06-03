@@ -14,8 +14,8 @@ params:
   PKS_USER: ((PKS_USER))
   PKS_PASSWORD: ((PKS_PASSWORD))
   PKS_CLUSTER: ((PKS_CLUSTER))
-  DB_USER: ((dbusername))
-  DB_PASSWORD: ((dbpassword))
+  DB_USER: ((DB_USER))
+  DB_PASSWORD: ((DB_PAASWORD))
 
 inputs:
   - name: helm-chart
