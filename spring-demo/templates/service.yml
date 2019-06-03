@@ -37,3 +37,11 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "spring-demo.name" . }}-service
     app.kubernetes.io/instance: {{ .Release.Name }}-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  type: ExternalName
+  externalName: {{ .Values.dbhost }}
