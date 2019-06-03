@@ -9,6 +9,14 @@ image_resource:
       - harbor.ellin.net:443
     tag: latest
 
+params:
+  - PKS_ENDPOINT
+  - PKS_USER
+  - PKS_PASSWORD
+  - PKS_CLUSTER
+  - DB_USER
+  - DB_PASSWORD
+
 inputs:
   - name: helm-chart
   - name: config
