@@ -14,6 +14,6 @@ VERSION=$(cat config/.git/ref)
 
 helm init --client-only
 cd helm-chart
-helm --debug upgrade spring-demo --install spring-demo --values ../config/values.yml
+helm --debug upgrade spring-demo --install spring-demo --values ../config/values.yml --set dbusername={$DB_USER} --set dbpassword=${DB_PASSWORD}
 kubectl annotate deployment  spring-demo kubernetes.io/change-cause="Deployed by CI SHA: ${VERSION}"
 
