@@ -1,4 +1,4 @@
-springdemoimage: be6954
+springdemoimage: 7256a3
 springserviceimage: 23873e
 databaseurl: "jdbc:mysql://db-service:3306/demo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
 dbhost: ubuntu-2.ellin.net
